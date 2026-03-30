@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 `# Synthos 2.0
 
 Synthos 2.0 是一个基于 `PyQt5`、`qfluentwidgets` 与 `SQLAlchemy` 构建的 Windows 桌面应用平台，用于统一管理内部应用目录、用户权限、资源更新、插件分发和常用工作入口。
@@ -247,3 +248,7 @@ python smoke_check.py
 - [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)
 - [initialize_project.py](/E:/Synthos%202.0/initialize_project.py)
 - [init_project.bat](/E:/Synthos%202.0/init_project.bat)
+=======
+# Synthos
+Synthos - A Windows desktop application platform built with PyQt5, QFluentWidgets, and SQLAlchemy for unified automation and workflow management.
+>>>>>>> 3ca25c0e79005473f8070162148298b2d81e307b
