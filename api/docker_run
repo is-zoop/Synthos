@@ -1,0 +1,9 @@
+docker build -t synthos-api:latest .
+docker stop synthos-api
+docker rm -f synthos-api
+docker run -d -p 8000:8000 ^
+  -v %cd%\\app\\app_data:/app/app_data ^
+  -e APP_DATA_DIR=/app/app_data ^
+  -e API_KEY=replace-me-with-your-own-api-key ^
+  --name synthos-api ^
+  synthos-api:latest

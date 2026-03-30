@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Synthos - 桌面自动化平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: '#eff6ff',
+                100: '#dbeafe',
+                500: '#3b82f6',
+                600: '#2563eb',
+                700: '#1d4ed8',
+                900: '#1e3a8a',
+              }
+            },
+            animation: {
+              blob: "blob 7s infinite",
+            },
+            keyframes: {
+              blob: {
+                "0%": {
+                  transform: "translate(0px, 0px) scale(1)",
+                },
+                "33%": {
+                  transform: "translate(30px, -50px) scale(1.1)",
+                },
+                "66%": {
+                  transform: "translate(-20px, 20px) scale(0.9)",
+                },
+                "100%": {
+                  transform: "translate(0px, 0px) scale(1)",
+                },
+              },
+            },
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        font-family: 'Inter', 'Noto Sans SC', sans-serif;
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8; 
+      }
+      .animation-delay-2000 {
+        animation-delay: 2s;
+      }
+      .animation-delay-4000 {
+        animation-delay: 4s;
+      }
+      .tab-content {
+        transition: opacity 0.3s ease-in-out;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-slate-50 text-slate-900 antialiased selection:bg-primary-100 selection:text-primary-900 flex flex-col min-h-screen">
+    
+    <!-- HEADER -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-6 bg-transparent">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <!-- Logo -->
+          <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <div class="w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary-500/30">
+              <i data-lucide="zap" class="w-6 h-6"></i>
+            </div>
+            <span class="text-2xl font-bold tracking-tight text-slate-900">Synthos</span>
+          </div>
+
+          <!-- Desktop Nav -->
+          <nav class="hidden md:flex items-center gap-8">
+            <a href="#features" class="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">功能特性</a>
+            <a href="#ecosystem" class="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">应用生态</a>
+            <a href="#developers" class="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">开发者</a>
+          </nav>
+
+          <!-- CTA Button -->
+          <div class="hidden md:flex items-center gap-4">
+<!--            <button class="text-sm font-medium text-slate-600 hover:text-slate-900">登录</button>-->
+<!--            <button class="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">-->
+<!--              <i data-lucide="download" class="w-4 h-4"></i>-->
+<!--              下载客户端-->
+<!--            </button>-->
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <div class="md:hidden">
+            <button id="mobile-menu-btn" class="text-slate-600 hover:text-slate-900 p-2">
+              <i data-lucide="menu"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 right-0 bg-white border-b border-slate-100 p-4 shadow-lg flex-col gap-4">
+        <a href="#features" class="text-base font-medium text-slate-600 hover:text-primary-600 py-2 block mobile-link">功能特性</a>
+        <a href="#ecosystem" class="text-base font-medium text-slate-600 hover:text-primary-600 py-2 block mobile-link">应用生态</a>
+        <a href="#developers" class="text-base font-medium text-slate-600 hover:text-primary-600 py-2 block mobile-link">开发者</a>
+        <hr class="border-slate-100" />
+        <button class="w-full flex items-center justify-center gap-2 bg-primary-600 text-white px-5 py-3 rounded-xl text-base font-medium">
+          <i data-lucide="download" class="w-5 h-5"></i>
+          立即下载
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-grow">
+      
+      <!-- HERO SECTION -->
+      <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl -z-10 pointer-events-none">
+          <div class="absolute top-20 left-10 w-72 h-72 bg-primary-200/40 rounded-full blur-3xl mix-blend-multiply animate-blob"></div>
+          <div class="absolute top-20 right-10 w-72 h-72 bg-purple-200/40 rounded-full blur-3xl mix-blend-multiply animate-blob animation-delay-2000"></div>
+          <div class="absolute -bottom-8 left-1/2 w-72 h-72 bg-pink-200/40 rounded-full blur-3xl mix-blend-multiply animate-blob animation-delay-4000"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-xs font-semibold uppercase tracking-wide mb-8 shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-primary-500 animate-pulse"></span>
+            v1.0 全新发布
+          </div>
+          
+          <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight mb-8">
+            电商自动化，<br class="hidden md:block" />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-purple-600">重新定义工作流</span>
+          </h1>
+          
+          <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Synthos 是为电商团队打造的一站式桌面终端。<br class="hidden sm:block" />
+            集成自动化脚本、多平台工具箱与即时热更新插件系统。提升效率，仅需一键。
+          </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+          <a
+            href= "/download/exe/Synthos.zip"
+            download="Synthos.zip"
+            class="w-full sm:w-auto px-8 py-4 bg-slate-900 text-white rounded-2xl font-semibold text-lg shadow-xl shadow-slate-900/20 hover:bg-slate-800 hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2"
+            target="_blank"
+          >
+            免费下载 (Windows)
+            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </a>
+          <button class="w-full sm:w-auto px-8 py-4 bg-white text-slate-700 border border-slate-200 rounded-2xl font-semibold text-lg hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 flex items-center justify-center gap-2">
+            <i data-lucide="terminal" class="w-5 h-5"></i>
+            开发者文档
+          </button>
+        </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
+            <div class="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+              <i data-lucide="package" class="w-6 h-6 text-primary-500 mb-3"></i>
+              <h3 class="font-bold text-slate-900 text-sm">丰富的工具生态</h3>
+              <p class="text-xs text-slate-500 mt-1">开箱即用的电商工具</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+              <i data-lucide="zap" class="w-6 h-6 text-primary-500 mb-3"></i>
+              <h3 class="font-bold text-slate-900 text-sm">热更新技术</h3>
+              <p class="text-xs text-slate-500 mt-1">插件无感实时更新</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+              <i data-lucide="terminal" class="w-6 h-6 text-primary-500 mb-3"></i>
+              <h3 class="font-bold text-slate-900 text-sm">Python 驱动</h3>
+              <p class="text-xs text-slate-500 mt-1">强大的脚本扩展能力</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+              <i data-lucide="shield-check" class="w-6 h-6 text-primary-500 mb-3"></i>
+              <h3 class="font-bold text-slate-900 text-sm">企业级权限</h3>
+              <p class="text-xs text-slate-500 mt-1">精准的团队成员管理</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTERACTIVE PREVIEW SECTION -->
+      <section id="ecosystem" class="py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">熟悉的界面，更强大的内核</h2>
+            <p className="text-lg text-slate-600">采用现代化 UI 设计，还原原生桌面体验，流畅且高效。</p>
+          </div>
+
+          <!-- Window Container -->
+          <div class="relative max-w-5xl mx-auto rounded-xl shadow-2xl shadow-slate-400/20 border border-slate-200 bg-[#f3f3f3] overflow-hidden aspect-[16/10] md:aspect-[16/9] flex flex-col">
+            
+            <!-- Title Bar -->
+            <div class="h-10 bg-white border-b border-slate-200 flex items-center justify-between px-4 select-none">
+              <div class="flex items-center gap-4">
+                <div class="flex gap-2">
+                  <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                  <div class="w-3 h-3 rounded-full bg-amber-400"></div>
+                  <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                </div>
+                <div class="flex items-center gap-2 text-sm text-slate-500">
+                  <div class="w-4 h-4 bg-primary-500 rounded flex items-center justify-center">
+                     <span class="text-[8px] text-white font-bold">S</span>
+                  </div>
+                  Synthos
+                </div>
+                <div class="flex gap-3 text-slate-400">
+                  <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-1 overflow-hidden">
+              <!-- Sidebar -->
+              <div class="w-16 bg-white border-r border-slate-200 flex flex-col items-center py-4 gap-6">
+                <button 
+                  onclick="switchTab('dashboard')"
+                  data-target="dashboard"
+                  class="tab-btn p-2 rounded-lg transition-all bg-primary-50 text-primary-600"
+                >
+                  <i data-lucide="home" class="w-6 h-6"></i>
+                </button>
+                <button 
+                  onclick="switchTab('tools')"
+                  data-target="tools"
+                  class="tab-btn p-2 rounded-lg transition-all text-slate-400 hover:text-slate-600"
+                >
+                  <i data-lucide="layout-grid" class="w-6 h-6"></i>
+                </button>
+                <button 
+                  onclick="switchTab('admin')"
+                  data-target="admin"
+                  class="tab-btn p-2 rounded-lg transition-all text-slate-400 hover:text-slate-600"
+                >
+                  <i data-lucide="users" class="w-6 h-6"></i>
+                </button>
+                <div class="mt-auto text-slate-400">
+                  <i data-lucide="settings" class="w-6 h-6"></i>
+                </div>
+              </div>
+
+              <!-- Content Area -->
+              <div class="flex-1 bg-[#f8f9fb] p-6 overflow-y-auto relative">
+                
+                <!-- TAB: DASHBOARD -->
+                <div id="dashboard" class="tab-content space-y-6">
+                  <h2 class="text-2xl font-bold text-slate-800">欢迎回来，翻斗花园老爷爷！</h2>
+                  
+                  <div class="grid grid-cols-4 gap-4">
+                    <!-- Stat 1 -->
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                      <div class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center mb-3">
+                        <i data-lucide="layout-grid" class="w-5 h-5 text-orange-500"></i>
+                      </div>
+                      <div class="text-xs text-slate-500 mb-1">已发布的应用</div>
+                      <div class="text-xl font-bold text-slate-800">12</div>
+                    </div>
+                    <!-- Stat 2 -->
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                        <div class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center mb-3">
+                          <i data-lucide="settings" class="w-5 h-5 text-orange-500"></i>
+                        </div>
+                        <div class="text-xs text-slate-500 mb-1">近7天更新</div>
+                        <div class="text-xl font-bold text-slate-800">3</div>
+                      </div>
+                    <!-- Stat 3 -->
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                        <div class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center mb-3">
+                          <i data-lucide="plus" class="w-5 h-5 text-orange-500"></i>
+                        </div>
+                        <div class="text-xs text-slate-500 mb-1">近30天发布</div>
+                        <div class="text-xl font-bold text-slate-800">2</div>
+                      </div>
+                    <!-- Stat 4 -->
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                        <div class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center mb-3">
+                          <i data-lucide="clock" class="w-5 h-5 text-orange-500"></i>
+                        </div>
+                        <div class="text-xs text-slate-500 mb-1">已为您节省时间</div>
+                        <div class="text-xl font-bold text-primary-600">240分钟</div>
+                      </div>
+                  </div>
+
+                  <!-- Calendar & Log -->
+                  <div class="grid grid-cols-3 gap-6">
+                    <div class="col-span-2 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                      <div class="flex justify-between items-center mb-6">
+                         <h3 class="font-bold text-slate-700">更新日志</h3>
+                         <span class="text-sm text-slate-400">2025年 11月</span>
+                      </div>
+                      <!-- Mock Calendar Grid -->
+                      <div class="grid grid-cols-7 gap-4 text-center text-sm">
+                        <div class="text-red-500 font-medium">周日</div>
+                        <div class="text-red-500 font-medium">周一</div>
+                        <div class="text-red-500 font-medium">周二</div>
+                        <div class="text-red-500 font-medium">周三</div>
+                        <div class="text-red-500 font-medium">周四</div>
+                        <div class="text-red-500 font-medium">周五</div>
+                        <div class="text-red-500 font-medium">周六</div>
+                        
+                        <!-- Simple Loop for numbers -->
+                        <script>
+                            for(let i=1; i<=30; i++) {
+                                let cls = i === 24 ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/30' : 'text-slate-600 hover:bg-slate-50';
+                                document.write(`<div class="py-2 rounded-lg ${cls}">${i}</div>`);
+                            }
+                        </script>
+                      </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                      <div class="flex gap-4 mb-4 border-b border-slate-100 pb-2">
+                        <span class="font-bold text-primary-600 border-b-2 border-primary-600 pb-2 -mb-2.5">收藏</span>
+                        <span class="text-slate-400">常用</span>
+                      </div>
+                      <div class="h-48 flex items-center justify-center text-slate-300 bg-slate-50 rounded-lg border border-dashed border-slate-200">
+                        暂无收藏
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- TAB: TOOLS -->
+                <div id="tools" class="tab-content h-full flex gap-4 hidden">
+                  <!-- Sidebar Categories -->
+                  <div class="w-48 shrink-0 space-y-1">
+                    <div class="px-3 py-2 text-xs font-bold text-slate-400 uppercase tracking-wider">目录</div>
+                    <div class="px-4 py-3 rounded-lg text-sm font-medium cursor-pointer bg-white shadow-sm text-primary-600 border-l-4 border-primary-500">天猫运营工具</div>
+                    <div class="px-4 py-3 rounded-lg text-sm font-medium cursor-pointer text-slate-600 hover:bg-slate-100">商品运营工具</div>
+                    <div class="px-4 py-3 rounded-lg text-sm font-medium cursor-pointer text-slate-600 hover:bg-slate-100">抖音运营工具</div>
+                    <div class="px-4 py-3 rounded-lg text-sm font-medium cursor-pointer text-slate-600 hover:bg-slate-100">京东运营工具</div>
+                    <div class="px-4 py-3 rounded-lg text-sm font-medium cursor-pointer text-slate-600 hover:bg-slate-100">得物运营工具</div>
+                  </div>
+
+                  <!-- Tool List -->
+                  <div class="flex-1 space-y-3">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">列表</div>
+                    
+                    <!-- Tool Item 1 -->
+                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex items-center gap-4 group hover:border-primary-200 transition-all">
+                        <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">鹿</div>
+                        <div class="flex-1">
+                          <h4 class="font-bold text-slate-800">鹿班测图工具</h4>
+                          <p class="text-xs text-slate-500 mt-1 line-clamp-1">按照款号批量获取本地图片上传至鹿班并自动上线测图</p>
+                        </div>
+                        <button class="px-4 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-lg text-sm hover:bg-slate-50 transition-colors">打开</button>
+                    </div>
+
+                    <!-- Tool Item 2 -->
+                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex items-center gap-4 group hover:border-primary-200 transition-all">
+                        <div class="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">天</div>
+                        <div class="flex-1">
+                          <h4 class="font-bold text-slate-800">天猫直播闪降工具</h4>
+                          <p class="text-xs text-slate-500 mt-1 line-clamp-1">闪降活动创建、闪降商品push或批量取消闪降商品</p>
+                        </div>
+                        <button class="px-4 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-lg text-sm hover:bg-slate-50 transition-colors">打开</button>
+                    </div>
+
+                    <!-- Tool Item 3 -->
+                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex items-center gap-4 group hover:border-primary-200 transition-all">
+                        <div class="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">淘</div>
+                        <div class="flex-1">
+                          <h4 class="font-bold text-slate-800">淘宝直播营销中心工具</h4>
+                          <p class="text-xs text-slate-500 mt-1 line-clamp-1">淘宝直播营销中心主图打标、库存追加工具</p>
+                        </div>
+                        <button class="px-4 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-lg text-sm hover:bg-slate-50 transition-colors">打开</button>
+                    </div>
+
+                    <!-- Tool Item 4 -->
+                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex items-center gap-4 group hover:border-primary-200 transition-all">
+                        <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0">国</div>
+                        <div class="flex-1">
+                          <h4 class="font-bold text-slate-800">天猫国际货品发布</h4>
+                          <p class="text-xs text-slate-500 mt-1 line-clamp-1">自动填写天猫国际商品属性与规格</p>
+                        </div>
+                        <button class="px-4 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-lg text-sm hover:bg-slate-50 transition-colors">打开</button>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- TAB: ADMIN -->
+                <div id="admin" class="tab-content h-full flex flex-col hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <button class="bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-lg shadow-primary-500/20">新增用户</button>
+                        <div class="relative">
+                           <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                           <input type="text" placeholder="搜索用户..." class="pl-9 pr-4 py-2 rounded-lg border border-slate-200 text-sm w-64 focus:outline-none focus:border-primary-500" />
+                        </div>
+                     </div>
+   
+                     <!-- Table Header -->
+                     <div class="grid grid-cols-6 gap-4 bg-slate-200/50 p-3 rounded-t-lg text-xs font-bold text-slate-600 text-center">
+                       <div>用户ID</div>
+                       <div>用户名</div>
+                       <div>姓名</div>
+                       <div>是否激活</div>
+                       <div>用户角色</div>
+                       <div>操作</div>
+                     </div>
+                     
+                     <!-- Mock Row -->
+                     <div class="grid grid-cols-6 gap-4 bg-white p-3 border-b border-slate-100 text-sm text-slate-700 items-center text-center relative">
+                       <div class="font-mono text-slate-400">00000000</div>
+                       <div>User_Admin</div>
+                       <div>管理员</div>
+                       <div><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs">是</span></div>
+                       <div>Admin</div>
+                       <div class="flex justify-center gap-2">
+                          <button class="p-1 hover:bg-slate-100 rounded"><i data-lucide="settings" class="w-4 h-4 text-slate-400"></i></button>
+                       </div>
+   
+                       <!-- Modal Overlay (Simulated) -->
+                       <div class="absolute top-8 left-1/4 right-1/4 bg-white rounded-xl shadow-2xl border border-slate-200 z-10 p-6 text-left animate-in zoom-in-95 fade-in">
+                         <h3 class="font-bold text-lg mb-4">权限设置</h3>
+                         <div class="border border-slate-200 rounded-lg p-4 max-h-60 overflow-y-auto mb-6 bg-slate-50">
+                           <div class="space-y-2">
+                                <div class="flex items-center gap-3 p-2 hover:bg-white rounded cursor-pointer">
+                                  <i data-lucide="check-square" class="w-5 h-5 text-primary-500"></i>
+                                  <span class="text-slate-900">鹿班测图工具</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-2 hover:bg-white rounded cursor-pointer">
+                                    <i data-lucide="check-square" class="w-5 h-5 text-primary-500"></i>
+                                    <span class="text-slate-900">天猫库存/预售时间调整工具</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-2 hover:bg-white rounded cursor-pointer">
+                                    <i data-lucide="square" class="w-5 h-5 text-slate-300"></i>
+                                    <span class="text-slate-500">天猫直播闪降工具</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-2 hover:bg-white rounded cursor-pointer">
+                                    <i data-lucide="square" class="w-5 h-5 text-slate-300"></i>
+                                    <span class="text-slate-500">与辉同行商品提报</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-2 hover:bg-white rounded cursor-pointer">
+                                    <i data-lucide="check-square" class="w-5 h-5 text-primary-500"></i>
+                                    <span class="text-slate-900">pyd编译工具</span>
+                                </div>
+                           </div>
+                         </div>
+                         <div class="flex gap-3">
+                           <button class="flex-1 bg-primary-500 hover:bg-primary-600 text-white py-2 rounded-lg transition-colors">提交</button>
+                           <button class="flex-1 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 py-2 rounded-lg">取消</button>
+                         </div>
+                       </div>
+                     </div>
+                     
+                     <!-- Blurred background rows -->
+                     <div class="grid grid-cols-6 gap-4 bg-white p-3 border-b border-slate-100 text-sm text-slate-700 items-center text-center opacity-30 blur-[1px]">
+                        <div>...</div><div>...</div><div>...</div><div>...</div><div>...</div><div>...</div>
+                     </div>
+                     <div class="grid grid-cols-6 gap-4 bg-white p-3 border-b border-slate-100 text-sm text-slate-700 items-center text-center opacity-30 blur-[1px]">
+                        <div>...</div><div>...</div><div>...</div><div>...</div><div>...</div><div>...</div>
+                     </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURES SECTION -->
+      <section id="features" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-3xl font-bold text-slate-900 sm:text-4xl">全角色覆盖的解决方案</h2>
+            <p class="mt-4 text-lg text-slate-600">无论您是运营人员、开发者还是管理者，Synthos 都能提供量身定制的高效体验。</p>
+          </div>
+  
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6">
+                <i data-lucide="user" class="w-7 h-7 text-blue-500"></i>
+              </div>
+              <div class="text-sm font-bold tracking-wide text-slate-400 uppercase mb-2">用户端</div>
+              <h3 class="text-2xl font-bold text-slate-900 mb-4">简单，触手可及</h3>
+              <p class="text-slate-600 leading-relaxed mb-8 min-h-[80px]">
+                通过清晰的目录结构查看所有工具。支持一键应用热加载、查看详细教程、收藏常用工具及快速问题反馈。
+              </p>
+              <ul class="space-y-3">
+                <li class="flex items-center gap-3 text-slate-700"><div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>目录式工具浏览</li>
+                <li class="flex items-center gap-3 text-slate-700"><div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>应用秒级热更新</li>
+                <li class="flex items-center gap-3 text-slate-700"><div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>一键收藏常用功能</li>
+              </ul>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div class="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center mb-6">
+                  <i data-lucide="code-2" class="w-7 h-7 text-purple-500"></i>
+                </div>
+                <div class="text-sm font-bold tracking-wide text-slate-400 uppercase mb-2">开发者端</div>
+                <h3 class="text-2xl font-bold text-slate-900 mb-4">无限扩展可能</h3>
+                <p class="text-slate-600 leading-relaxed mb-8 min-h-[80px]">
+                  自主开发 Python 插件并发布到平台。拥有完整的版本迭代管理功能，让你的代码创造价值。
+                </p>
+                <ul class="space-y-3">
+                  <li class="flex items-center gap-3 text-slate-700"><div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>Python 插件开发 SDK</li>
+                  <li class="flex items-center gap-3 text-slate-700"><div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>自动化版本发布流</li>
+                  <li class="flex items-center gap-3 text-slate-700"><div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>实时日志调试</li>
+                </ul>
+              </div>
+
+            <!-- Feature 3 -->
+            <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div class="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center mb-6">
+                  <i data-lucide="crown" class="w-7 h-7 text-orange-500"></i>
+                </div>
+                <div class="text-sm font-bold tracking-wide text-slate-400 uppercase mb-2">管理端</div>
+                <h3 class="text-2xl font-bold text-slate-900 mb-4">掌控全局</h3>
+                <p class="text-slate-600 leading-relaxed mb-8 min-h-[80px]">
+                  精细化的用户管理与权限控制系统。可以针对不同账号分配特定的工具访问权限，保障数据安全。
+                </p>
+                <ul class="space-y-3">
+                  <li class="flex items-center gap-3 text-slate-700"><div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>用户账号生命周期管理</li>
+                  <li class="flex items-center gap-3 text-slate-700"><div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>颗粒度权限分配</li>
+                  <li class="flex items-center gap-3 text-slate-700"><div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>操作审计日志</li>
+                </ul>
+              </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA SECTION -->
+      <section class="py-24 bg-slate-900 text-white text-center px-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-3xl md:text-5xl font-bold mb-6">准备好提升效率了吗？</h2>
+          <p class="text-slate-300 text-lg mb-10 max-w-2xl mx-auto">
+            加入数千个使用 Synthos 的电商团队，将重复性工作交给自动化脚本。
+            立即开始免费试用。
+          </p>
+          <a
+            href= "/download/exe/Synthos.zip"
+            download="Synthos.zip"
+            target="_blank"
+            class="bg-primary-600 hover:bg-primary-500 text-white px-10 py-4 rounded-full text-lg font-semibold transition-all shadow-lg shadow-primary-600/30 hover:shadow-primary-500/50 hover:-translate-y-1 inline-block"
+          >
+          立即下载 Windows 版
+        </a>
+          <p class="mt-6 text-slate-500 text-sm">支持 Windows 10 / 11 · 暂不支持 macOS</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 pt-16 pb-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+          <div class="col-span-2 md:col-span-1">
+             <div class="flex items-center gap-2 mb-4">
+                <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white">
+                  <i data-lucide="zap" class="w-5 h-5"></i>
+                </div>
+                <span class="text-xl font-bold text-slate-900">Synthos</span>
+             </div>
+             <p class="text-slate-500 text-sm leading-relaxed">
+               专为电商团队设计的桌面自动化解决方案。<br/>让繁琐的工作自动化，让创造力回归。
+             </p>
+          </div>
+          
+          <div>
+            <h4 class="font-bold text-slate-900 mb-4">产品</h4>
+            <ul class="space-y-2 text-sm text-slate-500">
+              <li><a href="#" class="hover:text-primary-600">功能特性</a></li>
+              <li><a href="#" class="hover:text-primary-600">应用市场</a></li>
+              <li><a href="#" class="hover:text-primary-600">更新日志</a></li>
+              <li><a href="#" class="hover:text-primary-600">下载客户端</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-bold text-slate-900 mb-4">开发者</h4>
+            <ul class="space-y-2 text-sm text-slate-500">
+              <li><a href="#" class="hover:text-primary-600">开发者文档</a></li>
+              <li><a href="#" class="hover:text-primary-600">API 参考</a></li>
+              <li><a href="#" class="hover:text-primary-600">GitHub 仓库</a></li>
+              <li><a href="#" class="hover:text-primary-600">提交插件</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-bold text-slate-900 mb-4">支持</h4>
+            <ul class="space-y-2 text-sm text-slate-500">
+              <li><a href="#" class="hover:text-primary-600">帮助中心</a></li>
+              <li><a href="#" class="hover:text-primary-600">社区论坛</a></li>
+              <li><a href="#" class="hover:text-primary-600">联系我们</a></li>
+              <li><a href="#" class="hover:text-primary-600">隐私政策</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p class="text-slate-400 text-sm">© 2025 Synthos Inc. All rights reserved.</p>
+          <div class="flex gap-6">
+             <!-- Social Icons -->
+             <div class="w-5 h-5 bg-slate-200 rounded-full"></div>
+             <div class="w-5 h-5 bg-slate-200 rounded-full"></div>
+             <div class="w-5 h-5 bg-slate-200 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- INTERACTIVITY SCRIPTS -->
+    <script>
+      // Initialize Lucide Icons
+      lucide.createIcons();
+
+      // Mobile Menu Logic
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+
+      mobileBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        mobileMenu.classList.toggle('flex');
+        const icon = mobileMenu.classList.contains('hidden') ? 'menu' : 'x';
+        mobileBtn.innerHTML = `<i data-lucide="${icon}"></i>`;
+        lucide.createIcons();
+      });
+
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+           mobileMenu.classList.add('hidden');
+           mobileMenu.classList.remove('flex');
+           mobileBtn.innerHTML = `<i data-lucide="menu"></i>`;
+           lucide.createIcons();
+        });
+      });
+
+      // Sticky Header Logic
+      const header = document.getElementById('main-header');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+          header.classList.add('bg-white/80', 'backdrop-blur-md', 'shadow-sm', 'py-4');
+          header.classList.remove('bg-transparent', 'py-6');
+        } else {
+          header.classList.remove('bg-white/80', 'backdrop-blur-md', 'shadow-sm', 'py-4');
+          header.classList.add('bg-transparent', 'py-6');
+        }
+      });
+
+      // Tab Switching Logic
+      function switchTab(tabId) {
+        // Hide all contents
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+        // Show target
+        document.getElementById(tabId).classList.remove('hidden');
+        
+        // Reset sidebar buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('bg-primary-50', 'text-primary-600');
+            btn.classList.add('text-slate-400', 'hover:text-slate-600');
+        });
+
+        // Highlight active button
+        const activeBtn = document.querySelector(`[data-target="${tabId}"]`);
+        activeBtn.classList.remove('text-slate-400', 'hover:text-slate-600');
+        activeBtn.classList.add('bg-primary-50', 'text-primary-600');
+      }
+    </script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

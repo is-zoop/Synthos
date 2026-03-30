@@ -1,0 +1,6 @@
+SplitTitleBar QLabel#TitleLabel {
+    background: transparent;
+    font: 13px 'Segoe UI';
+    padding: 0 4px;
+    color: white;
+}

@@ -1,0 +1,8 @@
+{
+  "app_id": "2IPG66",
+  "app_name": "pyd编译工具",
+  "owner": "is_zoop",
+  "description": "py文件编译成pyd文件",
+  "version": "1.0.4",
+  "icon": "icon"
+}

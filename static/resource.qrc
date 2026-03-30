@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/res">
+        <file>images/icon.png</file>
+        <file>images/background.jpg</file>
+        <file>images/404.png</file>
+        <file>images/about.png</file>
+        <file>images/edit.png</file>
+        <file>images/hasten.png</file>
+        <file>images/publish.png</file>
+        <file>images/statistics.png</file>
+        <file>images/statistics.png</file>
+        <file>images/app_icon.png</file>
+        <file>images/favourite.png</file>
+        <file>images/permission.png</file>
+    </qresource>
+</RCC>
+
+<!--pyrcc5 resource.qrc -o ../resource.py-->

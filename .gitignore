@@ -1,0 +1,57 @@
+# -----------------------------
+# IDE / OS
+# -----------------------------
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Python cache / build
+# -----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# -----------------------------
+# Logs / runtime files
+# -----------------------------
+*.log
+app.log
+
+# -----------------------------
+# Environment files (keep examples)
+# -----------------------------
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# -----------------------------
+# Node / frontend artifacts
+# -----------------------------
+node_modules/
+api/templates/node_modules/
+api/templates/dist/
+
+# -----------------------------
+# Local runtime data (do not commit)
+# -----------------------------
+api/app/app_data/
+localappdata/
+
+# -----------------------------
+# Databases / archives
+# -----------------------------
+*.db
+*.sqlite
+*.sqlite3
+*.zip

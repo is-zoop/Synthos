@@ -1,0 +1,9 @@
+﻿aiofiles==25.1.0
+fastapi==0.116.1
+Jinja2==3.1.6
+pydantic==2.11.7
+pydantic-settings==2.12.0
+python-dotenv==1.2.1
+python-multipart==0.0.20
+starlette==0.47.2
+uvicorn==0.35.0

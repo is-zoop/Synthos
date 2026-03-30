@@ -1,0 +1,9 @@
+
+#topWidget {
+  background-color: white;
+  border-radius: 8px;
+}
+#cookieWidget {
+  background-color: white;
+  border-radius: 8px;
+}
