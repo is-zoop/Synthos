@@ -1,4 +1,4 @@
-# Synthos
+# Synthos 
 
 Synthos 是一个基于 `PyQt5`、`qfluentwidgets` 与 `SQLAlchemy` 构建的 Windows 桌面应用平台，用于统一管理内部应用目录、用户权限、资源更新、插件分发和常用工作入口。
 
