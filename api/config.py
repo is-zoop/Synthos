@@ -3,10 +3,12 @@ import os
 import shutil
 from pathlib import Path
 
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
     APP_TITLE: str = "file-service"
     APP_DATA_DIR: Path = Path(os.getenv("APP_DATA_DIR", "app/app_data"))
     API_KEY: str = os.getenv("API_KEY", "replace-me-with-your-own-api-key")
@@ -60,10 +62,6 @@ class Settings(BaseSettings):
                 shutil.copy2(self.DEFAULT_AVATAR_SOURCE, shoko_target)
             if not default_target.exists():
                 shutil.copy2(shoko_target, default_target)
-
-    class Config:
-        env_file = ".env"
-
 
 settings = Settings()
 settings.create_dirs()

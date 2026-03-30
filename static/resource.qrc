@@ -15,4 +15,4 @@
     </qresource>
 </RCC>
 
-<!--pyrcc5 resource.qrc -o ../resource.py-->
+<!--pyrcc5 resource.qrc -o resource.py-->

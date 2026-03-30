@@ -4,13 +4,11 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QLocale, QRect
 from PyQt5.QtGui import QIcon, QPixmap, QColor, QFont
-from PyQt5.QtWidgets import QApplication, QHBoxLayout, QLabel, QPushButton, QMessageBox
-from qfluentwidgets import (BodyLabel, CheckBox, InfoBarPosition, LineEdit, PrimaryPushButton, setThemeColor,
-                            FluentTranslator,  SplitTitleBar, isDarkTheme, TitleLabel, InfoBar, Dialog, StateToolTip)
+from PyQt5.QtWidgets import QApplication, QHBoxLayout, QLabel, QPushButton
+from qfluentwidgets import (BodyLabel, CheckBox, LineEdit, PrimaryPushButton, setThemeColor,
+                            FluentTranslator, SplitTitleBar, isDarkTheme, TitleLabel)
 import settings
-import resource
 # from services.base import engine
-from utils.style_sheet import StyleSheet
 from utils.creds import CredentialManager
 from .LoginView.login_dialog import LoginDialog
 from .GeneralWidgets.general_widget import info_bar

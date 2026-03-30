@@ -24,6 +24,7 @@ from core.paths import (
     ensure_default_runtime_files,
     ensure_example_plugin_installed,
     ensure_example_plugin_storage,
+    ensure_update_launcher_in_api_app_data,
     read_example_manifest,
 )
 
@@ -193,6 +194,10 @@ def bootstrap_project() -> BootstrapResult:
     example_app_id, local_target = ensure_example_plugin_installed(overwrite=False)
     _, api_target = ensure_example_plugin_storage(overwrite=False)
     result.plugin_targets.extend([f"{example_app_id}:{local_target}", f"{example_app_id}:{api_target}"])
+
+    update_launcher_target = ensure_update_launcher_in_api_app_data(overwrite=False)
+    if update_launcher_target is not None:
+        result.plugin_targets.append(f"update_launcher:{update_launcher_target}")
 
     generated = ensure_default_runtime_files()
     result.plugin_targets.extend([f"default_avatar:{path}" for path in generated["avatars"]])

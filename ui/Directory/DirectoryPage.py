@@ -40,8 +40,6 @@ from .directory_func import (
 )
 from .open_app_func import open_app, submit_app_permission
 
-import resource
-
 
 class DirectoryPage(QWidget):
     tab_requested = pyqtSignal(str, str, str, str, str)

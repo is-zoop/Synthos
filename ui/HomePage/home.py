@@ -5,7 +5,6 @@ from qfluentwidgets import IconWidget
 from .Calendar import CustomCalendarWidget
 from .favourite_ui import FavouriteUi
 from .home_func import get_apps_count
-import resource
 
 
 class HomePage(QWidget):

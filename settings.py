@@ -45,8 +45,6 @@ RESOURCES_API = {
     "updater": SERVER_URL + "download/exe/{filename}",
 }
 
-ZIP_PASSWORD = os.getenv("ZIP_PASSWORD", "replace-me-with-your-own-zip-password")
-
 # 插件目录
 PLUGINS_DIR = USER_DATA_DIR / "plugins"
 PLUGINS_DIR.mkdir(parents=True, exist_ok=True)

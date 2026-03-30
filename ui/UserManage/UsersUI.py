@@ -5,8 +5,6 @@ from PyQt5.QtGui import QFont, QIcon, QPixmap
 from PyQt5.QtWidgets import QApplication, QFrame, QHBoxLayout, QLabel, QScrollArea, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget, QHeaderView
 from qfluentwidgets import Dialog, FluentIcon, InfoBar, InfoBarPosition, PrimaryPushButton, SearchLineEdit, TableWidget, ToolButton
 
-import resource
-
 from .PermissionForm import PermissionForm
 from .UserForms import UserForms
 from .user_funcs import create_user_task, delete_user_task, load_users, search_users, update_user_task

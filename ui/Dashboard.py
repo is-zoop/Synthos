@@ -2,12 +2,10 @@
 import sys
 import os
 import settings
-import resource
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import Qt, QSize, QUrl, QTimer
 from PyQt5.QtGui import QIcon, QDesktopServices, QMoveEvent
-from qfluentwidgets import (NavigationItemPosition, FluentWindow, SplashScreen, SystemThemeListener, NavigationAvatarWidget,
-                            SubtitleLabel, IconWidget, CaptionLabel)
+from qfluentwidgets import (NavigationItemPosition, FluentWindow, SplashScreen, SystemThemeListener, NavigationAvatarWidget)
 from qfluentwidgets import FluentIcon as FIF
 from services.base import engine
 from utils.plugin_manager import PluginManager

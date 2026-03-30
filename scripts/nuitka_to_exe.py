@@ -1,4 +1,4 @@
-# build.py
+# 主程序打包脚本
 
 import subprocess
 import sys
@@ -19,7 +19,7 @@ def run_nuitka():
         # 输出配置
         '--output-dir=F:\\files',
         '--output-filename=Synthos',
-        '--windows-icon-from-ico=E:\\Synthos\\static\\icon3.ico',
+        '--windows-icon-from-ico=E:\\Synthos\\static\\image\\icon.ico',
 
         # --- 文件信息 ---
         f'--windows-product-name={settings.APP_NAME}',

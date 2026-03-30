@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QApplication, QDialog, QVBoxLayout, QHBoxLayout, QWi
 from PyQt5.QtGui import QColor
 from qfluentwidgets import FluentTranslator, SubtitleLabel, BodyLabel, TextEdit, PrimaryPushButton, PushButton
 from core.paths import ensure_runtime_artifacts
+from static import resource  # noqa: F401  # Register Qt resources (:/res/...)
 
 # 修复 'MessageBoxBase' object has no attribute 'windowMask' 崩溃问题
 from qfluentwidgets.components.dialog_box.mask_dialog_base import MaskDialogBase

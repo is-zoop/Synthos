@@ -8,11 +8,12 @@ from typing import Iterable
 import settings
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-EXAMPLE_PLUGIN_SOURCE_DIR = REPO_ROOT / "example"
+EXAMPLE_ROOT_DIR = REPO_ROOT / "example"
 API_LOCAL_DATA_DIR = REPO_ROOT / "api" / "app" / "app_data"
 STATIC_DIR = REPO_ROOT / "static"
 DEFAULT_AVATAR_SOURCE = STATIC_DIR / "shoko.png"
 RESOURCE_INDEX_FILENAME = "resource.json"
+UPDATE_LAUNCHER_FILENAME = "update_launcher.exe"
 
 
 def ensure_dir(path: Path) -> Path:
@@ -32,8 +33,21 @@ def get_installed_plugin_manifest(app_id: str) -> Path:
     return get_installed_plugin_dir(app_id) / "plugin.json"
 
 
+def get_example_plugin_source_dir() -> Path:
+    """Prefer the new example/plugins layout, keep old layout compatible."""
+    candidates = [
+        EXAMPLE_ROOT_DIR / "plugins",
+        EXAMPLE_ROOT_DIR,
+    ]
+    for candidate in candidates:
+        if (candidate / "plugin.json").exists():
+            return candidate
+    # Keep previous behavior and let caller fail clearly if files are missing.
+    return EXAMPLE_ROOT_DIR / "plugins"
+
+
 def read_example_manifest() -> dict:
-    manifest_path = EXAMPLE_PLUGIN_SOURCE_DIR / "plugin.json"
+    manifest_path = get_example_plugin_source_dir() / "plugin.json"
     with open(manifest_path, "r", encoding="utf-8") as file:
         return json.load(file)
 
@@ -58,7 +72,7 @@ def ensure_example_plugin_installed(overwrite: bool = False) -> tuple[str, Path]
     manifest = read_example_manifest()
     app_id = manifest["app_id"]
     target_dir = get_installed_plugin_dir(app_id)
-    copy_directory_contents(EXAMPLE_PLUGIN_SOURCE_DIR, target_dir, overwrite=overwrite)
+    copy_directory_contents(get_example_plugin_source_dir(), target_dir, overwrite=overwrite)
     return app_id, target_dir
 
 
@@ -68,8 +82,23 @@ def ensure_example_plugin_storage(overwrite: bool = False) -> tuple[str, Path]:
     app_id = manifest["app_id"]
     plugin_root = ensure_dir(API_LOCAL_DATA_DIR / "plugin")
     target_dir = ensure_dir(plugin_root / app_id)
-    copy_directory_contents(EXAMPLE_PLUGIN_SOURCE_DIR, target_dir, overwrite=overwrite)
+    copy_directory_contents(get_example_plugin_source_dir(), target_dir, overwrite=overwrite)
     return app_id, target_dir
+
+
+def ensure_update_launcher_in_api_app_data(overwrite: bool = False) -> Path | None:
+    """
+    Ensure example/update_launcher.exe exists in repo-local API app_data.
+    Returns copied/target path when present, otherwise None.
+    """
+    source = EXAMPLE_ROOT_DIR / UPDATE_LAUNCHER_FILENAME
+    if not source.exists():
+        return None
+
+    target = ensure_dir(API_LOCAL_DATA_DIR) / UPDATE_LAUNCHER_FILENAME
+    if overwrite or not target.exists():
+        shutil.copy2(source, target)
+    return target
 
 
 def _write_default_resource_index(target_path: Path) -> None:
