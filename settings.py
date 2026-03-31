@@ -2,17 +2,28 @@
 import sys
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+
+def _get_required_env(name: str) -> str:
+    value = os.getenv(name)
+    if value in (None, ""):
+        raise RuntimeError(f"Missing required environment variable: {name}")
+    return value
+
+
+BASE_DIR = Path(__file__).resolve().parent
+load_dotenv(BASE_DIR / ".env", override=False)
+
 # 应用基础信息
-APP_NAME = "Synthos"
-VERSION = "1.0.0"
+APP_NAME = os.getenv("APP_NAME", "Synthos")
+VERSION = os.getenv("VERSION", "1.0.0")
 
 # 服务端配置
 SERVER_URL = os.getenv("SERVER_URL", "http://127.0.0.1:8000/")
-# 不在仓库内保存真实密钥，默认值仅用于提醒必须在环境变量中覆盖
-API_KEY = os.getenv("API_KEY", "replace-me-with-your-own-api-key")
+API_KEY = _get_required_env("API_KEY")
 
 # 项目与用户数据目录
-BASE_DIR = Path(__file__).resolve().parent
 USER_DATA_PATH = Path(os.getenv("LOCALAPPDATA", BASE_DIR / "localappdata"))
 USER_DATA_DIR = USER_DATA_PATH / APP_NAME
 USER_DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -53,14 +64,11 @@ PLUGINS_UPLOAD_URL = SERVER_URL + "upload/plugin/{plugin_id}"
 
 # 数据库配置
 DB_USER = os.getenv("DB_USER", "root")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "replace-me-with-your-own-db-password")
+DB_PASSWORD = _get_required_env("DB_PASSWORD")
 DB_HOST = os.getenv("DB_HOST", "127.0.0.1")
 DB_PORT = os.getenv("DB_PORT", "3306")
 DB_NAME = os.getenv("DB_NAME", "synthos")
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}",
-)
+DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 DOCUMENT_URL = "https://example.com"
 
