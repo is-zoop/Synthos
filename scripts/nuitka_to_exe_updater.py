@@ -7,7 +7,7 @@ import os
 
 def run_nuitka():
     # 定义打包命令（以列表形式，避免 shell 注入问题）
-    venv_python_path = r"E:\AutoTool\.venv\Scripts\python.exe"
+    venv_python_path = r".\.venv\Scripts\python.exe"
 
     cmd = [
         venv_python_path, '-m', 'nuitka',
