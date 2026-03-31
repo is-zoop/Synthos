@@ -265,3 +265,6 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 >>>>>>> 3ca25c0e79005473f8070162148298b2d81e307b
+
+!example/plugins/
+!example/plugins/*.pyd

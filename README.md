@@ -2,6 +2,8 @@
  
 Synthos 是一个基于 `PyQt5`、`qfluentwidgets` 与 `SQLAlchemy` 构建的 Windows 桌面应用平台，用于统一管理内部应用目录、用户权限、资源更新、插件分发和常用工作入口。
 
+![演示图](static/images/demo.png)
+
 ## 核心功能
 
 - 登录与鉴权：支持记住密码、本地凭据加密存储、按角色动态生成导航。
@@ -173,4 +175,3 @@ python main.py
 - [README.md](./README.md)
 - [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)
 - [initialize_project.py](/E:/Synthos%202.0/initialize_project.py)
-- [init_project.bat](/E:/Synthos%202.0/init_project.bat)
