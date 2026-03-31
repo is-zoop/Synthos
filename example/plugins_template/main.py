@@ -1,7 +1,7 @@
 from step_ui import PyToPydWidget
 from utils.plugin_interface import PluginInterface
 
-
+git add .
 class CountdownPlugin(PluginInterface):
     def __init__(self):
         pass

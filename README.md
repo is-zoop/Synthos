@@ -129,7 +129,7 @@ SERVER_URL=https://your-api-host/  ## api连接（如http://127.0.0.1:8000/）
 API_KEY=your-api-key ## api部署时使用的api_key
 ```
 
-### 默认管理员
+#### 默认管理员
 
 - 用户名：`admin`
 - 密码：`123456`
