@@ -13,7 +13,7 @@ from utils.resource_download import compare_hash_versions
 from ui.UserManage.UsersUI import UsersManage
 from ui.HomePage.home import HomePage
 from ui.MySettings.UserSettings_ui import UserSettings, load_avatar
-from ui.information.information_page import InformationPage
+from ui.Information.information_page import InformationPage
 from ui.Directory.DirectoryPage import DirectoryPage
 from ui.Directory.TabView import CustomTitleBar, TabInterface, TabManager
 from ui.AppManage.manage_ui import ManageUi

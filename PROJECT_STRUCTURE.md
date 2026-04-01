@@ -80,15 +80,14 @@ Synthos/
 │  ├─ resource.py               # Qt 资源映射代码
 │  └─ resource.qrc              # Qt 资源清单
 ├─ ui/                          # 客户端 UI 模块
-│  ├─ AppManage/
-│  ├─ Directory/
-│  ├─ GeneralWidgets/
-│  ├─ HomePage/
-│  ├─ Infomation/
-│  ├─ information/
-│  ├─ LoginView/
-│  ├─ MySettings/
-│  ├─ UserManage/
+│  ├─ AppManage/                # 应用管理模块
+│  ├─ Directory/                # 应用目录模块
+│  ├─ GeneralWidgets/           # 常用QT组件
+│  ├─ HomePage/                 # 主页模块
+│  ├─ Information/              # 消息模块
+│  ├─ LoginView/                # 登录窗口模块
+│  ├─ MySettings/               # 个人设置模块
+│  ├─ UserManage/               # 用户管理摸块
 │  ├─ Dashboard.py              # 仪表盘页面
 │  ├─ LoginUi.py                # 登录窗口
 │  └─ __init__.py
