@@ -115,22 +115,33 @@ docker compose logs -f
 6. 将 example 插件同步到本地 API 默认数据目录，便于直接运行 `api/`。
 7. 将 `example/update_launcher.exe` 复制到 `app_data` 目录。
 
-启动客户端前，请先配置 [settings.py](/Synthos/settings.py)（重点：数据库连接、`SERVER_URL`、`API_KEY`）。
+启动客户端前，请先配置环境变量。
+
+```bash
+cp .env.example .env
+```
+
+如果是 Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
 
 #### 配置说明
 
-初始化默认从 `settings.py` 读取配置：
+初始化默认从 `.env` 读取配置：
 
 ```bash
-DB_USER=your_user  ## 数据库用户名
-DB_PASSWORD=your_password ## 数据库密码
-DB_HOST=your_host  ## 数据库连接
-DB_PORT=3306       ## 数据库端口
-DB_NAME=your_db    ## 数据库名称 
-SERVER_URL=https://your-api-host/  ## api连接（如http://127.0.0.1:8000/）
-API_KEY=your-api-key ## api部署时使用的api_key
+APP_NAME=Synthos                              # APP名称
+VERSION=1.0.0                                 # APP版本
+SERVER_URL=http://127.0.0.1:8000/             # 服务器地址
+API_KEY=replace-me-with-your-own-api-key      # api部署时使用的api_key
+DB_USER=root                                  # 数据库用户名
+DB_PASSWORD=replace-me-with-your-own-db-password # 数据库密码
+DB_HOST=127.0.0.1                             # 数据库连接
+DB_PORT=3306                                  # 数据库端口 
+DB_NAME=synthos                               # 数据库名称 
 ```
-
 #### 默认管理员
 
 - 用户名：`admin`
