@@ -5,7 +5,6 @@ from PyQt5.QtCore import Qt, QLocale
 from PyQt5.QtWidgets import QApplication, QDialog, QVBoxLayout, QHBoxLayout, QWidget, QGraphicsDropShadowEffect
 from PyQt5.QtGui import QColor
 from qfluentwidgets import FluentTranslator, SubtitleLabel, BodyLabel, TextEdit, PrimaryPushButton, PushButton
-from core.paths import ensure_runtime_artifacts
 from static import resource  # noqa: F401  # Register Qt resources (:/res/...)
 
 # 修复 'MessageBoxBase' object has no attribute 'windowMask' 崩溃问题
@@ -156,8 +155,6 @@ def handle_exception(exc_type, exc_value, exc_traceback):
 
 sys.excepthook = handle_exception
 
-# 启动前补齐默认 example 插件和本地 API 示例目录。
-ensure_runtime_artifacts()
 
 if hasattr(sys, '_MEIPASS'):
     os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(sys._MEIPASS, 'PyQt5', 'Qt', 'plugins')

@@ -18,7 +18,6 @@ from ui.Directory.DirectoryPage import DirectoryPage
 from ui.Directory.TabView import CustomTitleBar, TabInterface, TabManager
 from ui.AppManage.manage_ui import ManageUi
 from ui.GeneralWidgets.process_widget import ProgressDialog, DownloadThread
-from core.paths import ensure_runtime_artifacts
 
 
 class Dashboard(FluentWindow):
@@ -27,7 +26,6 @@ class Dashboard(FluentWindow):
         super().__init__()
         self.user = user
         self.roles_mapping = user.get("roles_mapping", {})
-        ensure_runtime_artifacts()
         # 添加Tab组件
         self.setTitleBar(CustomTitleBar(self))
         self.tabBar = self.titleBar.tabBar
